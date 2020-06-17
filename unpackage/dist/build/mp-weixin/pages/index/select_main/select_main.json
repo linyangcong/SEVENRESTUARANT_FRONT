@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "comp-detail": "/pages/index/detail/detail",
+    "comp-shopping": "/pages/index/shopping_car/shopping_car"
+  }
+}

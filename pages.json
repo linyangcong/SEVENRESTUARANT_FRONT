@@ -1,0 +1,74 @@
+{
+	"pages": [{
+		"path": "pages/index/index",
+		"style": {
+			"navigationBarTitleText": "洪阳果汁"
+		}
+	}    ,{
+            "path" : "pages/about_us/about_us",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/index/activities/activities",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/index/select_main/select_main",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/index/scroll_main",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/index/select_main/main_container/main_container",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/index/detail/detail",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/index/shopping_car/shopping_car",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/index/seeMap/seeMap",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/index/operation_page/operation_page",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/index/login/login",
+            "style" : {}
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "普宁洪兴果汁店",
+		"navigationBarBackgroundColor": "#000000",
+		"backgroundColor": "#FFFFFF"
+	},
+	"tabBar":{
+	"color":"#FFFFFF",
+	"selectedColor":"#1afa29",
+	"backgroundColor":"#000000",
+	"list":[
+		{
+			"pagePath":"pages/index/index",
+			"text":"首页",
+			"iconPath":"static/imgs/tabars/home_white.png",
+			"selectedIconPath":"static/imgs/tabars/home_green.png"
+		},
+		{
+			"pagePath":"pages/about_us/about_us",
+			"text":"关于我们",
+			"iconPath":"static/imgs/tabars/user_white.png",
+			"selectedIconPath":"static/imgs/tabars/user_green.png"
+		}
+		
+	]
+	}
+}

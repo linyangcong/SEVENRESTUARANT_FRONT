@@ -1,0 +1,43 @@
+
+.detail_bg.data-v-4103ac58{
+	background-color: #eee;
+	height: 90vh;
+}
+.detail_titile.data-v-4103ac58{
+	padding: 30rpx 10rpx;
+	background-color: #fff;
+	/* font-size: 30rpx; */
+}
+.menu_detail_item_title.data-v-4103ac58{
+	color: #000;
+	font-size: 32rpx;
+	font-weight: bold;
+	line-height: 56rpx;
+}
+.menu_detail_item_text.data-v-4103ac58{
+	font-size: 22rpx;
+	color: #aaa;
+	line-height: 44rpx;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	/* word-wrap: break-word; */
+}
+.menu_detail_item_price.data-v-4103ac58{
+	font-size: 30rpx;
+}
+.menu_detail_item_oldprice.data-v-4103ac58{
+	font-size: 20rpx;
+	color: #aaa;
+	text-decoration: line-through;
+	margin: 0rpx 10rpx;
+}
+.menu_detail_item_size.data-v-4103ac58{
+	font-size: 24rpx;
+	background: #007AFF;
+	color: #fff;
+	padding: 5rpx 16rpx;
+	border-radius: 17rpx;
+	margin-left: 10rpx;
+}
+

@@ -1,0 +1,42 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/about_us/about_us",
+    "pages/index/activities/activities",
+    "pages/index/select_main/select_main",
+    "pages/index/scroll_main",
+    "pages/index/select_main/main_container/main_container",
+    "pages/index/detail/detail",
+    "pages/index/shopping_car/shopping_car",
+    "pages/index/seeMap/seeMap",
+    "pages/index/operation_page/operation_page"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "普宁洪兴果汁店",
+    "navigationBarBackgroundColor": "#000000",
+    "backgroundColor": "#FFFFFF"
+  },
+  "tabBar": {
+    "color": "#FFFFFF",
+    "selectedColor": "#1afa29",
+    "backgroundColor": "#000000",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/imgs/tabars/home_white.png",
+        "selectedIconPath": "static/imgs/tabars/home_green.png"
+      },
+      {
+        "pagePath": "pages/about_us/about_us",
+        "text": "关于我们",
+        "iconPath": "static/imgs/tabars/user_white.png",
+        "selectedIconPath": "static/imgs/tabars/user_green.png"
+      }
+    ]
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
+}
