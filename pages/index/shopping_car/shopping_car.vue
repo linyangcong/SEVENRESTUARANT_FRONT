@@ -26,7 +26,7 @@
 					<text style="margin:0rpx 5rpx;">{{item.num}}</text>
 					<image @click.stop="operate_shopping_num('add',item.goodsId)" style="height: 36rpx;width:36rpx" src="../../../static/imgs/add.png"></image>
 				</view>
-				<view style="flex: 1;">￥{{item.count}}</view>
+				<view style="flex: 1;">￥{{item.count|getPrice}}</view>
 			</view>
 		
 			<view v-show="$store.state.shopping.length==0" style="text-align: center;margin-top: 50rpx;color: #AAAAAA;">
@@ -37,7 +37,7 @@
 		
 		<view class="" style="width: 96vw;display: flex;flex-direction: row;height: 100rpx;margin-bottom: 100rpx;">
 			<button :disabled="selected_item==undefined||selected_item.Id==undefined" @click.stop="addShopping" type="primary" style="flex: 1;">加入购物车</button>
-			<button @click.stop="goPay" type="warn" style="flex: 1;display: flex;flex-direction: row;align-items: center;white-space: nowrap;overflow-x: hidden;" plain="true">
+			<button :disabled="$store.state.sums<='0'" @click.stop="goPay" type="warn" style="flex: 1;display: flex;flex-direction: row;align-items: center;white-space: nowrap;overflow-x: hidden;" plain="true">
 				<text>结算:</text>
 				<text>￥{{$store.state.sums|getPrice}}</text>
 				<text style="color:#AAAAAA;font-size: 28rpx;text-decoration: line-through;margin: 0rpx 10rpx;">￥{{$store.state.old_sums|getPrice}}</text>
@@ -48,25 +48,42 @@
 </template>
 
 <script>
-	
+	import config from '../../../static/config.js'
 	export default {
 		data() {
 			return {
+				config:config
 				
 			}
 		},
 		props:["selected_item"],
 		methods: {
 			goPay(){
-				uni.showToast({
-					title: '暂不支持支付',
-					icon: 'none',
-					success: (res) => {
-						uni.navigateTo({
-							url:'../seeMap/seeMap'
-						})
-					}
-				})
+				let count = 0.00,sum=0.0;
+					this.$store.state.shopping.map(item => {
+						count += item.count
+					})
+				sum=(parseFloat(this.$store.state.selectedBusiness.shopstartfee)-count).toFixed(2)
+				// console.log(count,this.business.shopstartfee,sum)
+				if(this.$store.state.sums<=0){
+					uni.showToast({
+						title:'结算异常',
+						icon:'none'
+					})
+					return;
+				}
+				else if(sum>0){
+					uni.showToast({
+						title:'还差￥'+sum+'起送',
+						icon:'none'
+					})
+					return;
+				}
+				else{
+					uni.navigateTo({
+						url:'../seeMap/seeMap',
+					})
+				}
 			},
 			operate_shopping_num(operation, timestamp) {
 				// this.operate_num(operation)
@@ -123,7 +140,7 @@
 				if (size == 'l') return '大份';
 			},
 			getPrice(data){
-				return data
+				return data.toFixed(2)
 			}
 			
 		}

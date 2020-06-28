@@ -1,6 +1,9 @@
-// var sever="https://wwww.linyc.online:3008"
-var sever="http://www.linyc.online:3008"
-var rescourceServer='https://wwww.linyc.online/WebView'
+// 正式
+// var server="https://www.linyc.online:3008"
+// var rescourceServer='https://www.linyc.online/WebView'
 
-//https://wwww.linyc.online/WebView/
-module.exports={rescourceServer,sever}
+// 测试
+var server="http://localhost:3008"
+var rescourceServer='http://localhost'
+
+module.exports={rescourceServer,server}

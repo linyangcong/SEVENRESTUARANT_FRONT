@@ -1,8 +1,9 @@
 {
-  "navigationBarTitleText": "洪阳果汁",
+  "navigationBarTitleText": "首页",
   "usingComponents": {
-    "uni-drawer": "/components/uni-drawer/uni-drawer",
     "com-main": "/pages/index/scroll_main",
-    "shopping-car": "/pages/index/shopping_car/shopping_car"
+    "shopping-car": "/pages/index/shopping_car/shopping_car",
+    "uni-drawer": "/components/uni-drawer/uni-drawer",
+    "selected-address": "/pages/index/selectAddress/selectAddress"
   }
 }

@@ -1,20 +1,28 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/about_us/about_us",
+    "pages/myDetail/about_us/about_us",
     "pages/index/activities/activities",
     "pages/index/select_main/select_main",
     "pages/index/scroll_main",
-    "pages/index/select_main/main_container/main_container",
     "pages/index/detail/detail",
     "pages/index/shopping_car/shopping_car",
     "pages/index/seeMap/seeMap",
-    "pages/index/operation_page/operation_page"
+    "pages/index/operation_page/operation_page",
+    "pages/index/selectAddress/selectAddress",
+    "pages/myOrder/myOrder",
+    "pages/myOrder/order_Problem/order_Problem",
+    "pages/myOrder/comment/comment",
+    "pages/myDetail/myDetail",
+    "pages/myDetail/orderDetail/orderDetail",
+    "pages/myDetail/login/login",
+    "pages/index/operation_page/registerBusiness/registerBusiness",
+    "pages/index/searchPage/searchPage"
   ],
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "普宁洪兴果汁店",
+    "navigationBarTitleText": "sevenRestuarant",
     "navigationBarBackgroundColor": "#000000",
     "backgroundColor": "#FFFFFF"
   },
@@ -30,12 +38,23 @@
         "selectedIconPath": "static/imgs/tabars/home_green.png"
       },
       {
-        "pagePath": "pages/about_us/about_us",
-        "text": "关于我们",
+        "pagePath": "pages/myOrder/myOrder",
+        "text": "我的订单",
+        "iconPath": "static/imgs/tabars/order_white.png",
+        "selectedIconPath": "static/imgs/tabars/order_green.png"
+      },
+      {
+        "pagePath": "pages/myDetail/myDetail",
+        "text": "我的",
         "iconPath": "static/imgs/tabars/user_white.png",
         "selectedIconPath": "static/imgs/tabars/user_green.png"
       }
     ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "方便用户填写位置参考"
+    }
   },
   "usingComponents": {},
   "sitemapLocation": "sitemap.json"

@@ -5,15 +5,18 @@
 			<image style="width: 100%;height: 16vh;position: absolute;top: 0rpx;left: 0rpx;" src="../../../static/imgs/swiper/hygz_01.jpg"></image>
 			<view class="head">
 				<view class="head_title">{{business.business_name}}</view>
-				<view class="head_flag"><text class="head_box">月售：2001</text><text class="head_box">可自取.2公里免配送费</text></view>
-				<view class="head_address">地址：广东省揭阳普宁市流沙西街道103号</view>
+				<view  style="font-size: 26rpx;color: #666666;margin-top: 20rpx;">联系电话：{{business.phoneNo}}</view>
+				<view class="head_flag">
+				<text class="head_box">{{business.shopdel|getshopdelType}}:￥{{business.delFee}}</text>
+				<text class="head_box">配送范围：店家周围{{business.shoprdelaround}}公里</text></view>
+				<view class="head_address">{{business.address}}</view>
 			</view>
 			<view class="main">
 				<view>
 					<text @click.stop="chooseTab(0)" class="choose_tab" :class="choos_tab?'choos_tab_style':''">点餐</text>
 					<text @click.stop="chooseTab(1)" class="choose_tab" :class="!choos_tab?'choos_tab_style':''">评价</text>
 				</view>
-				<view class="main_contain">
+				<view class="main_contain" v-if="choos_tab">
 					<!-- 菜品类型 -->
 					<scroll-view scroll-y="true" class="menu_types">
 						<view @click="gotoLocate(item.onlyIndex)" :class="['menu_types_item',soup_chose==item.onlyIndex?'soup_chose':'']"
@@ -43,6 +46,9 @@
 						</view>
 					</scroll-view>
 				</view>
+				
+				<!-- 评价 -->
+				<comp-comment v-else :addcomment='false' :business="business"></comp-comment>
 			</view>
 		</view>
 
@@ -74,7 +80,7 @@
 						<view class="">
 							<view>规格</view>
 							<view  class="selected_item_flex" style="align-items: center;justify-content: space-around;width: 96vw;text-align: center;">
-								<text @click.stop="selected_size_meth(item)" :class="['selected_size',$store.state.order[0].size==item?'selected_size_chose':'']"
+								<text @click.stop="selected_size_meth(item)" class="selected_size" :class="selected_size==item?'selected_size_chose':''"
 								 v-show="item!==''" :id="index" v-for="(item,index) in selected_item.size_type" :key="index">
 									{{item|getSize}}
 								</text>
@@ -96,13 +102,13 @@
 			</view>
 			<view style="flex: 5;margin-left: 30rpx;">
 				<view style="display: flex;flex-direction: row;align-items: flex-end;">
-					<text style="color: #FF0000;font-size: 36rpx;">￥{{$store.state.shopping|getallcount}}</text>
-					<text style="color: #AAAAAA;font-size: 20rpx;text-decoration: line-through;">￥{{$store.state.shopping|getallcount('old')}}</text>
+					<text style="color: #FF0000;font-size: 36rpx;">￥{{shopping|getallcount}}</text>
+					<text style="color: #AAAAAA;font-size: 20rpx;text-decoration: line-through;">￥{{shopping|getallcount('old')}}</text>
 				</view>
-				<view class="menu_detail_item_text">免配送费</view>
+				<view class="menu_detail_item_text">{{business.delFee=='0'?'无起配':'起配:￥'+business.shopstartfee}}</view>
 			</view>
 			<view style="flex: 4;">
-				<button type="primary" @click.stop="goPay">结算</button>
+				<button type="primary" @click.stop="goPay" :disabled="$store.state.userInformation.role=='02'">结算</button>
 			</view>
 		</view>
 	</scroll-view>
@@ -112,9 +118,11 @@
 	import config from '../../../static/config.js'
 	import compDetail from '../detail/detail'
 	import compShopping from '../shopping_car/shopping_car'
+	import compComment from '../../myOrder/comment/comment'
 	export default {
 		data() {
 			return {
+				shopping:[],
 				business:{},
 				config:config,
 				showDetail: false,
@@ -125,35 +133,41 @@
 				selected_item: {},
 				showShell: false,
 				// DetailItem:{},
-				// selected_size:'s',
+				selected_size:'s',
 				// count:1,
 				menu_detail_list: []
 			}
 		},
 		components: {
 			compDetail,
-			compShopping
+			compShopping,
+			compComment
 		},
 		methods: {
 			goPay() {
-				// uni.showToast({
-				// 	title: '暂不支持支付',
-				// 	icon: 'none',
-				// 	success: (res) => {
-						
-				// 	}
-				// })
-				
+				let count = 0.00,sum=0.0;
+					this.shopping.map(item => {
+						count += item.count
+					})
+				sum=(parseFloat(this.business.shopstartfee)-count).toFixed(2)
+				console.log(count,this.business.shopstartfee,sum)
 				if(this.$store.state.sums<=0){
 					uni.showToast({
-						title:'请选择商品再结算',
+						title:'',
+						icon:'none'
+					})
+					return;
+				}
+				else if(sum>0){
+					uni.showToast({
+						title:'还差￥'+sum+'起送',
 						icon:'none'
 					})
 					return;
 				}
 				else{
 					uni.navigateTo({
-						url:'../seeMap/seeMap'
+						url:'../seeMap/seeMap',
 					})
 				}
 				
@@ -185,7 +199,7 @@
 				}
 			},
 			selected_size_meth(size) {
-				// this.selected_size=item
+				this.selected_size=size
 				this.$store.commit('chooseSize', {
 					size: size,
 					item: this.selected_item
@@ -196,6 +210,14 @@
 				this.selected_item = {}
 			},
 			showSheet(value, flag) {
+				if(this.$store.state.userInformation.role=='02'){
+					uni.showToast({
+						title:'自家店结算什么',
+						icon:'none'
+					})
+					return ;
+				}
+				
 				this.showShell = true //打开购物车
 				console.log(value)
 				if (value == 0) {
@@ -238,7 +260,7 @@
 		},
 		filters: {
 			getallcount(list, flag) {
-				let count = 0;
+				let count = 0.0;
 				if (flag == 'old') {
 					list.map(item => {
 						count += item.old_count
@@ -248,7 +270,7 @@
 						count += item.count
 					})
 				}
-				return count
+				return count.toFixed(2)
 			},
 			getSize(size){
 				if (size == 's') return '小份';
@@ -257,9 +279,20 @@
 			},
 			getPrice(data){
 				return data
+			},
+			getshopdelType(val){
+				if(val=='00')return '店家配送'
+				if(val=='01')return '顺丰配送'
+				if(val=='02')return '蜂鸟配送'
 			}
 			
 		},
+		watch:{
+			"$store.state.shopping":function(val,oval){
+				this.shopping=this.$store.state.shopping
+			}
+		}
+		,
 		onLoad(data) {
 			if (data.type_index != undefined && data.index != undefined) {
 				// 'menu_detail'+item.soup_index+v.index
@@ -268,22 +301,42 @@
 				this.soup_chose =data.type_index
 				// this.type_chose=true
 			}
+			// this.selected_size_meth('s')
 		},
-		mounted() {
-			uni.request({
-				method:'GET',
-				url:config.server+'/getProduct?flag=sizearr',
-				success: (res) => {
-					console.log(res.data)
-					this.business=res.data.business
-					this.menu_detail_list=res.data.result_type
-					// this.menu_detail_list.map(item=>{
-					// 	item.result_list_arr.map(it=>{
-					// 		it,
-					// 	})
-					// })
-				}
-			})
+		onShow() {
+			if(this.$store.state.userInformation.role=='01'){
+				uni.request({
+					method:'GET',
+					url:config.server+'/getProduct?flag=sizearr&businessId='+this.$store.state.selectedBusiness.Id,
+					success: (res) => {
+						console.log(res.data)
+						this.business=res.data.business
+						this.menu_detail_list=res.data.result_type
+						// this.menu_detail_list.map(item=>{
+						// 	item.result_list_arr.map(it=>{
+						// 		it,
+						// 	})
+						// })
+					}
+				})
+			}else if(this.$store.state.userInformation.role=='02'){
+				uni.request({
+					method:'GET',
+					url:config.server+'/getProduct?flag=sizearr&businessId='+this.$store.state.userInformation.businessId,
+					success: (res) => {
+						console.log(res.data)
+						this.business=res.data.business
+						this.menu_detail_list=res.data.result_type
+						// this.menu_detail_list.map(item=>{
+						// 	item.result_list_arr.map(it=>{
+						// 		it,
+						// 	})
+						// })
+					}
+				})
+			}
+			this.shopping=this.$store.state.shopping
+			
 		}
 	}
 </script>
@@ -308,7 +361,7 @@
 	}
 
 	.head_title {
-		line-height: 100rpx;
+		line-height: 60rpx;
 		font-size: 50rpx;
 		color: #333333;
 	}
@@ -326,7 +379,7 @@
 	.head_address {
 		font-size: 30rpx;
 		line-height: 60rpx;
-		color: #888;
+		color: #666;
 		width: 80vw;
 
 
@@ -341,9 +394,9 @@
 	}
 
 	.choose_tab {
-		font-size: 26rpx;
+		font-size: 32rpx;
 		margin-right: 46rpx;
-		padding: 6rpx 0rpx;
+		padding: 10rpx 0rpx;
 		/* font-weight: 600; */
 	}
 

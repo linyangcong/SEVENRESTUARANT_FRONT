@@ -1,8 +1,8 @@
 {
-    "name" : "sevenPenguin_rest",
+    "name" : "sevenRestuarant",
     "appid" : "__UNI__DFAF048",
-    "description" : "",
-    "versionName" : "1.0.0",
+    "description" : "这是一个轻量级的外卖app",
+    "versionName" : "1.0.5",
     "versionCode" : "100",
     "transformPx" : false,
     "app-plus" : {

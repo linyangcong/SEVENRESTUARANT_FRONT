@@ -98,8 +98,8 @@
 		</view>
 		
 		<view style="margin: 30rpx 0rpx;padding-top:30rpx;border-top: #AAAAAA solid 1px;display: flex;flex-direction: row;align-items: center;">
-			<button  @click.stop="saveEdit('insert')"style="flex: 1;" type="primary" :disabled="editFlag">创建</button>
-			<button @click.stop="saveEdit('update')" style="flex: 1;" type="warn" :disabled="!editFlag">保存</button>
+			<button  @click.stop="saveEdit('insert')"style="flex: 1;" type="primary" plain="true" :disabled="editFlag">创建</button>
+			<button @click.stop="saveEdit('update')" style="flex: 1;" type="primary" :disabled="!editFlag">保存</button>
 		</view>
 		
 		<view style="font-size: 36rpx;line-height: 100rpx;border-bottom: 1px solid #CCCCCC;margin-top: 60rpx;display: flex;flex-direction: row;justify-content: space-between;">
@@ -204,7 +204,7 @@
 				this.itemSheet=false
 				this.type_modal=false
 				// this.newType=''
-				console.log(this.newType)
+				
 				uni.request({
 					data:{newType_name:this.newType,newType_fk_type:this.his_business.Id},
 					url:config.server+'/newType',
@@ -240,17 +240,28 @@
 
 			},
 			chooseType(flag){
-				console.log(flag,this.itemSheet)
+				
 				if(flag=='sheet'){
-					this.type_modal=true
-					this.itemSheet=true
+					
 					uni.request({
 						// data:data,
-						url:config.server+'/getShoppingType',
+						url:config.server+'/getShoppingType?businessId='+this.$store.state.userInformation.businessId,
 						// method:'POST',
 						success: (res) => {
-						this.type_list=res.data.type
-						console.log(this.type_modal,this.itemSheet)
+						
+						if(res.data.type.length==0){
+							this.type_modal=false
+							this.itemSheet=false
+							uni.showToast({
+								title:'您尚未添加商品类型',
+								icon:'none'
+							})
+						}else{
+							this.type_modal=true
+							this.itemSheet=true
+							this.type_list=res.data.type
+						}
+					
 						}
 					})
 				}
@@ -258,7 +269,7 @@
 					
 					this.type_modal=true
 					this.itemSheet=false
-					console.log(flag,this.itemSheet)
+					
 				}
 				
 				
@@ -302,9 +313,9 @@
 				
 			},
 			submitData(data,flag){
-				// console.log(config.server+'/updateItem')
+				
 				if(flag=='update'){
-					console.log('update',flag,config.server+'/updateItem')
+					
 					uni.request({
 						data:data,
 						url:config.server+'/updateItem',
@@ -313,12 +324,12 @@
 						// 刷新页面
 						this.initPage()
 						this.editFlag=false
-						console.log(res)
+						
 						}
 					})
 				}
 				if(flag=='insert'){
-					console.log('insert',flag)
+					
 					uni.request({
 						data:data,
 						url:config.server+'/insertItem',
@@ -327,23 +338,27 @@
 						// 刷新页面
 						this.initPage()
 						this.editFlag=false
-						console.log(res)
+						
 						
 						}
 					})
 				}
 				this.newShopping()
-				
-				
 			},
 			initPage(){
 				uni.request({
 					method:'GET',
-					url:config.server+'/getProduct',
+					url:config.server+'/getProduct?businessId='+this.$store.state.userInformation.businessId,
 					success: (res) => { 
+					
 						this.his_list=res.data.result_type
 						this.his_business=res.data.business
-						console.log(res.data)
+						if(this.his_list.length==0){
+							uni.showToast({
+								title:'您尚未添加商品类型',
+								icon:'none'
+							})
+						}
 					}
 				})
 			},
@@ -408,7 +423,7 @@
 						})
 					},
 					fail: (err) => {
-						console.log(err)
+						
 					}
 				})
 			},
@@ -421,7 +436,7 @@
 					itemList:['编辑','删除'],
 					itemColor:'#007AFF',
 					success: (res) => {
-						// console.log(res)
+						
 						if(res.tapIndex==0){
 							// 编辑
 							this.editId=index
@@ -450,7 +465,7 @@
 						}
 					},
 					fail: (err) => {
-						console.log(err)
+						
 					}
 				})
 			}
@@ -463,7 +478,22 @@
 			}
 		},
 		mounted() {
-			this.initPage()
+			
+			if(this.$store.state.userInformation.businessId==undefined){
+				uni.navigateTo({
+					url:'../login/login'
+				})
+			}else if(this.$store.state.userInformation.businessId==''||this.$store.state.userInformation.businessId==null){
+				uni.navigateTo({
+					url:'registerBusiness/registerBusiness'
+					
+				})
+			}
+			else{
+				
+				this.initPage()
+			}
+			
 		}
 	}
 </script>

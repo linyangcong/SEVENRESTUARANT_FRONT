@@ -1,6 +1,8 @@
 {
+  "navigationBarTitleText": "菜单",
   "usingComponents": {
     "comp-detail": "/pages/index/detail/detail",
-    "comp-shopping": "/pages/index/shopping_car/shopping_car"
+    "comp-shopping": "/pages/index/shopping_car/shopping_car",
+    "comp-comment": "/pages/myOrder/comment/comment"
   }
 }

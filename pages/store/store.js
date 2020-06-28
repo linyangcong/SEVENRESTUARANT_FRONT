@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
+		WXopenId:'',
+		WXsession_key:'',
 		order:[
 			{
 			shopDetail:{},
@@ -16,11 +18,17 @@ const store = new Vuex.Store({
 			size_type:[]
 		},
 		],
-		userInformation:{},
+		// 当前用户信息
+		userInformation:{ 
+			Id:-1,
+			def_address:{phoneNo:'',address:''}
+			},
+		// 店铺当前信息
+		selectedBusiness:{},
 		//购物车
 		shopping:[],
-		sums:0,
-		old_sums:0
+		sums:0.00,
+		old_sums:0.00
 	},
 	getters:{
 		getOrder:state=>{
@@ -102,8 +110,8 @@ const store = new Vuex.Store({
 		]
 	},
 	allSum(state){
-		if(state.shopping.length<=0){state.sum='0';return} 
-		let sums=0,old_sums=0
+		if(state.shopping.length<=0){state.sum=0.00;return} 
+		let sums=0.00,old_sums=0.00
 		state.shopping.map(item=>{
 			sums+=item.count
 			old_sums+=item.old_count
@@ -119,7 +127,11 @@ const store = new Vuex.Store({
 		
 	},
 	shoppingNum_dec(state,index){
-		if(state.shopping[index].num<=1) return;
+		if(state.shopping[index].num<1) return;
+		if(state.shopping[index].num==1){
+			state.shopping.splice(index,1)
+			return;
+		}
 		state.shopping[index].num--
 		state.shopping[index].count=state.shopping[index].num*state.shopping[index].price[state.shopping[index].size]
 		state.shopping[index].old_count=state.shopping[index].num*state.shopping[index].price[state.shopping[index].size]
@@ -134,8 +146,23 @@ const store = new Vuex.Store({
 	setuserInformation(state,unload){
 		state.userInformation=unload
 	},
+	setselectedBusiness(state,upload){
+		state.selectedBusiness=upload
+	},
+	setaddress(state,upload){
+		state.userInformation.def_address=upload
+	},
+	setWXOpenId(state,upload){
+		state.WXopenId=upload
+	},
+	setWXSessionKey(state,upload){
+		state.WXsession_key=upload
+	}
 	},
     actions: {
+		setbusiness(context,upload){
+			context.commit('setselectedBusiness',upload)
+		},
 		setUser(context,unload){
 			context.commit('setuserInformation',unload)
 		},
@@ -183,6 +210,16 @@ const store = new Vuex.Store({
 			context.commit('decnum')
 			context.commit('chooseSize',{size:context.state.order[0].size,item:goodsItem})
 		},
+		setUseraddress(context,upload){
+			context.commit('setaddress',upload)
+		},
+		setOpenId(context,opendId){
+			context.commit('setWXOpenId',opendId)
+		},
+		setSessionKey(context,sessionKey){
+			context.commit('setWXSessionKey',sessionKey)
+		}
+		
 		
 	}
 })

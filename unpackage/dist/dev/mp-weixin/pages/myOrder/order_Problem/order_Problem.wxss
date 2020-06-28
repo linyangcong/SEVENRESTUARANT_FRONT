@@ -1,0 +1,8 @@
+
+.order_problem_list.data-v-2b994fda{
+	font-size: 30rpx;
+	color: #007AFF;
+	padding: 20rpx;
+	border-bottom: 1px solid #CCCCCC;
+}
+

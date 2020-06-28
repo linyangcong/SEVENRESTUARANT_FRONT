@@ -1,0 +1,31 @@
+
+.title.data-v-e3bce4b2{
+	text-align: center;
+	font-size: 40rpx;
+}
+.inputBorder.data-v-e3bce4b2{
+	font-size: 30rpx;
+	padding: 10rpx;
+	border: 1px solid #AAAAAA;
+	line-height: 100rpx;
+	margin: 30rpx 0rpx;
+	border-radius: 10rpx;
+	color: #333333;
+}
+.formline.data-v-e3bce4b2{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	font-size: 28rpx;
+	color: #007AFF;
+	text-decoration: underline;
+	margin: 30rpx 0rpx;
+}
+

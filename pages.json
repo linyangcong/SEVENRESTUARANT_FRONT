@@ -1,12 +1,15 @@
 {
 	"pages": [{
 		"path": "pages/index/index",
-		"style": {
-			"navigationBarTitleText": "洪阳果汁"
+		"style":{
+			"navigationBarTitleText":"首页"
 		}
-	}    ,{
-            "path" : "pages/about_us/about_us",
-            "style" : {}
+		}    
+		,{
+            "path" : "pages/myDetail/about_us/about_us",
+            "style" : {
+				"navigationBarTitleText":"关于我们"
+			}
         }
         ,{
             "path" : "pages/index/activities/activities",
@@ -14,14 +17,12 @@
         }
         ,{
             "path" : "pages/index/select_main/select_main",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText":"菜单"
+			}
         }
         ,{
             "path" : "pages/index/scroll_main",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/index/select_main/main_container/main_container",
             "style" : {}
         }
         ,{
@@ -30,24 +31,81 @@
         }
         ,{
             "path" : "pages/index/shopping_car/shopping_car",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText":"购物车"
+			}
         }
         ,{
             "path" : "pages/index/seeMap/seeMap",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText":"确认信息"
+			}
         }
         ,{
             "path" : "pages/index/operation_page/operation_page",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText":"店铺菜单"
+			}
+        }
+        
+        ,{
+            "path" : "pages/index/selectAddress/selectAddress",
+            "style" : {
+				"navigationBarTitleText":"我的收获地址"
+			}
         }
         ,{
-            "path" : "pages/index/login/login",
-            "style" : {}
+            "path" : "pages/myOrder/myOrder",
+            "style" : {
+				"navigationBarTitleText":"我的订单"
+			}
+        }
+        ,{
+            "path" : "pages/myOrder/order_Problem/order_Problem",
+            "style" : {
+				"navigationBarTitleText":"订单问题"
+			}
+        }
+        ,{
+            "path" : "pages/myOrder/comment/comment",
+            "style" : {
+				"navigationBarTitleText":"评价"
+			}
+        }
+        ,{
+            "path" : "pages/myDetail/myDetail",
+            "style" : {
+				"navigationBarTitleText":"我的信息"
+			}
+        }
+        ,{
+            "path" : "pages/myDetail/orderDetail/orderDetail",
+            "style" : {
+				"navigationBarTitleText":"订单详情"
+			}
+        }
+        ,{
+            "path" : "pages/myDetail/login/login",
+            "style" : {
+				"navigationBarTitleText":"登录"
+			}
+        }
+        ,{
+            "path" : "pages/index/operation_page/registerBusiness/registerBusiness",
+            "style" : {
+				"navigationBarTitleText":"注册"
+			}
+        }
+        ,{
+            "path" : "pages/index/searchPage/searchPage",
+            "style" : {
+				"navigationBarTitleText":"查找菜单"
+			}
         }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
-		"navigationBarTitleText": "普宁洪兴果汁店",
+		"navigationBarTitleText": "sevenRestuarant",
 		"navigationBarBackgroundColor": "#000000",
 		"backgroundColor": "#FFFFFF"
 	},
@@ -63,8 +121,14 @@
 			"selectedIconPath":"static/imgs/tabars/home_green.png"
 		},
 		{
-			"pagePath":"pages/about_us/about_us",
-			"text":"关于我们",
+		    "pagePath":"pages/myOrder/myOrder",
+			"text":"我的订单",
+		    "iconPath":"static/imgs/tabars/order_white.png",
+		    "selectedIconPath":"static/imgs/tabars/order_green.png"
+		},
+		{
+			"pagePath":"pages/myDetail/myDetail",
+			"text":"我的",
 			"iconPath":"static/imgs/tabars/user_white.png",
 			"selectedIconPath":"static/imgs/tabars/user_green.png"
 		}
